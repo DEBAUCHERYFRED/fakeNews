@@ -1,30 +1,54 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import getData from "./api"
 import Input from "../presentational/Input";
+
 class FormContainer extends Component {
   constructor() {
     super();
     this.state = {
-      seo_title: ""
+      title: "",
+      data: []
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleGetNews = this.handleGetNews.bind(this);
+  }
+  componentDidMount(){
+    console.log(this.props, "props")
   }
   handleChange(event) {
-    this.setState({ [event.target.id]: event.target.value });
+    console.log(event);
+  }
+  handleGetNews(){
+    this.props.getData()
   }
   render() {
-    const { seo_title } = this.state;
+    console.log(this.props, "props")
+    const { title } = this.state;
     return (
       <form id="article-form">
         <Input
-          text="SEO title"
-          label="seo_title"
+          text="title"
+          label="search for news"
           type="text"
-          id="seo_title"
-          value={seo_title}
+          id="title"
+          value={title}
           handleChange={this.handleChange}
         />
+        <button type="button" onClick={this.handleGetNews}>click</button>
       </form>
     );
   }
 }
-export default FormContainer;
+
+const mapDispatchToProps = dispatch => {
+  return {
+      getData: bindActionCreators(getData, dispatch)
+    }
+};
+function mapStateToProps(state) {
+  return { newsData: state }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(FormContainer);
