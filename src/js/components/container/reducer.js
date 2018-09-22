@@ -1,7 +1,7 @@
 const newsReducer = (state = [], action) => {
   switch (action.type) {
     case "FETCH_DATA":
-      return "fetching";
+      return [...state]
 
     case "FETCH_SUCESS":
       return [...state, action.data]

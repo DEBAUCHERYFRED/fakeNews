@@ -18,7 +18,7 @@ export default function getData(){
   return function(dispatch) {
     dispatch(fetchData());
     return axios.get(url).then(data => {
-      dispatch(fetchSucess(data));
+      dispatch(fetchSucess(data.data.articles));
     }).catch(error => {
       dispatch(fetchFail(error));
     })

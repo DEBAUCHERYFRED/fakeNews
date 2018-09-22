@@ -12,33 +12,47 @@ class FormContainer extends Component {
       data: []
     };
     this.handleChange = this.handleChange.bind(this);
-    this.handleGetNews = this.handleGetNews.bind(this);
+    this.renderCard = this.renderCard.bind(this);
   }
   componentDidMount(){
-    console.log(this.props, "props")
+    this.props.getData()
   }
   handleChange(event) {
     console.log(event);
   }
-  handleGetNews(){
-    this.props.getData()
+  renderCard (){
+    console.log(this.props.newsData.newsReducer, "function call")
+    this.props.newsData.newsReducer[0].map((value,key) => {
+      return (
+        <div className="row">
+         <div className="col s12 m7">
+           <div className="card">
+             <div className="card-image">
+             <img src={value.urlToImage}/>
+               <span className="card-title">{value.title}</span>
+             </div>
+             <div className="card-content">
+               <p>{value.content}</p>
+             </div>
+             <div className="card-action">
+               <a href={value.url}>Go to site</a>
+             </div>
+           </div>
+         </div>
+       </div>
+      );
+    });
   }
   render() {
-    console.log(this.props, "props")
-    const { title } = this.state;
-    return (
-      <form id="article-form">
-        <Input
-          text="title"
-          label="search for news"
-          type="text"
-          id="title"
-          value={title}
-          handleChange={this.handleChange}
-        />
-        <button type="button" onClick={this.handleGetNews}>click</button>
-      </form>
-    );
+    console.log(this.props.newsData.newsReducer[0], "props")
+    if(this.props.newsData.newsReducer[0] !== "undefined" || this.props.newsData.length > 0 ){
+      console.log("call")
+      return (
+        <div>{this.renderCard()}</div>
+      )
+    } else {
+      return <div></div>;
+    }
   }
 }
 
