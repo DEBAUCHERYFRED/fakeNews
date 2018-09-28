@@ -20,40 +20,41 @@ class FormContainer extends Component {
   handleChange(event) {
     console.log(event);
   }
-  renderCard (){
-    console.log(this.props.newsData.newsReducer, "function call")
-    this.props.newsData.newsReducer[0].map((value,key) => {
-      return (
-        <div className="row">
-         <div className="col s12 m7">
-           <div className="card">
-             <div className="card-image">
-             <img src={value.urlToImage}/>
-               <span className="card-title">{value.title}</span>
-             </div>
-             <div className="card-content">
-               <p>{value.content}</p>
-             </div>
-             <div className="card-action">
-               <a href={value.url}>Go to site</a>
-             </div>
-           </div>
-         </div>
-       </div>
+  renderCard (cards) {
+      return cards.map((value,key) => {
+        return (
+          <div className="row" key={key}>
+            <div className="col-lg-3">
+              <div className="card">
+                <div className="card-image">
+                <img src={value.urlToImage}/>
+                <span className="card-title">{value.title}</span>
+              </div>
+              <div className="card-content">
+                <p>{value.content}</p>
+              </div>
+              <div className="card-action">
+                <a href={value.url}>Go to site</a>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     });
   }
+
   render() {
-    console.log(this.props.newsData.newsReducer[0], "props")
-    if(this.props.newsData.newsReducer[0] !== "undefined" || this.props.newsData.length > 0 ){
-      console.log("call")
+    if(this.props.newsData.newsReducer.length > 0) {
       return (
-        <div>{this.renderCard()}</div>
-      )
-    } else {
-      return <div></div>;
+        <div>
+        {this.renderCard(this.props.newsData.newsReducer[0])}
+        </div>
+      );
     }
-  }
+    return (
+      <div> Hello </div>
+    );
+  };
 }
 
 const mapDispatchToProps = dispatch => {
